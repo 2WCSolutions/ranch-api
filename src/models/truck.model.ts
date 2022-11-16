@@ -1,18 +1,18 @@
 import mongoose from 'mongoose';
 import { Guid } from 'guid-typescript';
 
-interface DeckModelInterface extends mongoose.Model<DeckDoc> {
-    getAll(): DeckDoc[],
+interface TruckModelInterface extends mongoose.Model<TruckDoc> {
+    getAll(): TruckDoc[],
 }
 
-interface DeckDoc extends mongoose.Document {
+interface UserDoc extends mongoose.Document {
     public_id: String;
-    deck_name: String;
+    truck_name: String;
     created_date: String;
 }
 
-const deckSchema = new mongoose.Schema({
-    deck_name: {
+const truckSchema = new mongoose.Schema({
+    truck_name: {
         type: String, 
         required: false
     },
@@ -28,6 +28,6 @@ const deckSchema = new mongoose.Schema({
     },
 })
 
-const Deck = mongoose.model<DeckDoc, DeckModelInterface>('Deck', deckSchema)
+const Truck = mongoose.model<UserDoc, TruckModelInterface>('Truck', truckSchema)
   
-export { Deck }
+export { Truck }

@@ -1,4 +1,4 @@
-4import { Request, Response, Router } from 'express';
+import { Request, Response, Router } from 'express';
 import Controller from '../interfaces/controller.interface';
 import { Deck } from '../models/deck.model';
 
@@ -34,6 +34,7 @@ class DeckController implements Controller {
       // can we make this asynchronous
       await deck.save();
       
+      // return response.status(201).send(deck)
       return response.status(201).send();
     }
   }
