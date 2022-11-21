@@ -5,7 +5,7 @@ interface WheelModelInterface extends mongoose.Model<WheelDoc> {
     getAll(): WheelDoc[],
 }
 
-interface UserDoc extends mongoose.Document {
+interface WheelDoc extends mongoose.Document {
     public_id: String;
     wheel_name: String;
     created_date: String;
@@ -28,6 +28,6 @@ const wheelSchema = new mongoose.Schema({
     },
 })
 
-const Wheel = mongoose.model<UserDoc, WheelModelInterface>('Wheel', wheelSchema)
+const Wheel = mongoose.model<WheelDoc, WheelModelInterface>('Wheel', wheelSchema)
   
 export { Wheel }

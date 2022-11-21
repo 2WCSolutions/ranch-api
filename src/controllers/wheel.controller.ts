@@ -1,6 +1,7 @@
 import { Request, Response, Router } from 'express';
 import Controller from '../interfaces/controller.interface';
 import { Wheel } from '../models/wheel.model';
+import { Guid } from 'guid-typescript';
 
 class WheelController implements Controller {
     public path = '/wheels';
@@ -11,7 +12,7 @@ class WheelController implements Controller {
       // careful careful
       // await wheel.deleteMany({});
   
-      let dheels = await Wheel.find()
+      let wheels = await Wheel.find()
         .sort({ "wheel_name": 1 });
   
       return response.status(200).send(wheels);

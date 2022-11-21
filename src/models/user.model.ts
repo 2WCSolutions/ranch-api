@@ -6,9 +6,9 @@ interface UserModelInterface extends mongoose.Model<UserDoc> {
 }
   
   interface UserDoc extends mongoose.Document {
-    user_id: String;
-    public_id: String;
-    display_name: String;
+    user_id: String,
+    public_id: String,
+    display_name: String,
     first_name: String,
     last_name: String,
     shop_id: String,
@@ -20,9 +20,9 @@ interface UserModelInterface extends mongoose.Model<UserDoc> {
     trucks_name: String,
     wheels_id: String,
     wheels_name: String,
-    claimed_date: Date;
-    created_date: String;
-    ip_address_nobody_is_anonymous: String;
+    claimed_date: Date,
+    created_date: String,
+    ip_address_nobody_is_anonymous: String
 }
 
 const userSchema = new mongoose.Schema({

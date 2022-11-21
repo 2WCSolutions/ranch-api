@@ -1,6 +1,7 @@
 import { Request, Response, Router } from 'express';
 import Controller from '../interfaces/controller.interface';
 import { Truck } from '../models/truck.model';
+import { Guid } from 'guid-typescript';
 
 class TruckController implements Controller {
     public path = '/trucks';

@@ -5,7 +5,7 @@ interface TruckModelInterface extends mongoose.Model<TruckDoc> {
     getAll(): TruckDoc[],
 }
 
-interface UserDoc extends mongoose.Document {
+interface TruckDoc extends mongoose.Document {
     public_id: String;
     truck_name: String;
     created_date: String;
@@ -28,6 +28,6 @@ const truckSchema = new mongoose.Schema({
     },
 })
 
-const Truck = mongoose.model<UserDoc, TruckModelInterface>('Truck', truckSchema)
+const Truck = mongoose.model<TruckDoc, TruckModelInterface>('Truck', truckSchema)
   
 export { Truck }

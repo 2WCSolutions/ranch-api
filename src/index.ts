@@ -10,10 +10,10 @@ const port = 8081;
 
 app.use(
     cors({
-      origin: [
-        '::1', 'http://localhost', 'http://localhost/:1', 'http://127.0.0.1', 
-        'http://localhost:3000/', 'http://localhost:3000', 'http://127.0.0.1:3000/'
-      ],
+      // origin: [
+      //   '::1', 'http://localhost', 'http://localhost/:1', 'http://127.0.0.1', 
+      //   'http://localhost:4/', 'http://localhost:3000', 'http://127.0.0.1:3000/'
+      // ],
       methods: ["GET", "POST"],
       credentials: false
     })
@@ -32,8 +32,7 @@ const options = {
     poolSize: parseInt(process.env.POOL_SIZE!),
 };
 
-
-mongoose.connect('mongodb+srv://skate:scosco1!@ranchdb.hfq7a.mongodb.net/?retryWrites=true&w=majority', {}, (err: any) => 
+mongoose.connect('mongodb+srv://skate:scosco1!@theranchdb.7umzm.mongodb.net/?retryWrites=true&w=majority', {}, (err: any) => 
     {  
         console.log("Mongo is connected...");
         

@@ -1,6 +1,7 @@
 import { Request, Response, Router } from 'express';
 import Controller from '../interfaces/controller.interface';
 import { User } from '../models/user.model';
+import { Guid } from 'guid-typescript';
  
 class UserController implements Controller {
 

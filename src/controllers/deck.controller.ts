@@ -1,6 +1,7 @@
 import { Request, Response, Router } from 'express';
 import Controller from '../interfaces/controller.interface';
 import { Deck } from '../models/deck.model';
+import { Guid } from 'guid-typescript';
 
 class DeckController implements Controller {
     public path = '/decks';
@@ -20,14 +21,15 @@ class DeckController implements Controller {
   public createDeck = async (request: Request, response: Response) => {
   
       const { 
-        public_id,
-        display_name,
+        deck_name,
         created_date
         } = request.body;
   
+      let public_id = Guid.create();
+
       const deck = new Deck({ 
         public_id,
-        display_name,
+        deck_name,
         created_date,
       });
       
