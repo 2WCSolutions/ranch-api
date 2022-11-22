@@ -19,17 +19,27 @@ class DeckController implements Controller {
   }
    
   public createDeck = async (request: Request, response: Response) => {
-  
+console.log("Create Deck....");
+console.log(request.body);
       const { 
         deck_name,
+        description,
+        deck_image_url,
+        deck_image,
         created_date
-        } = request.body;
+      } = request.body;
+
+      console.log("Body");
+      console.log(request.body);
   
       let public_id = Guid.create();
 
       const deck = new Deck({ 
         public_id,
         deck_name,
+        description,
+        deck_image_url,
+        deck_image,
         created_date,
       });
       

@@ -8,11 +8,26 @@ interface DeckModelInterface extends mongoose.Model<DeckDoc> {
 interface DeckDoc extends mongoose.Document {
     public_id: String;
     deck_name: String;
+    description: String;
+    deck_image_url: String;
+    deck_image: String;
     created_date: String;
 }
 
 const deckSchema = new mongoose.Schema({
     deck_name: {
+        type: String, 
+        required: true
+    },
+    description: {
+        type: String, 
+        required: true
+    },
+    deck_image_url: {
+        type: String, 
+        required: false
+    },
+    deck_image: {
         type: String, 
         required: false
     },
