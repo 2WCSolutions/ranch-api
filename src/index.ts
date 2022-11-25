@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import { json } from 'body-parser';
 import { userRouter } from './routes/ranch.routes'
 
+const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
@@ -19,11 +20,16 @@ app.use(
     })
   );
 
-app.use(json());
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json({limit: '50mb'}));
+
+// app.use(json());
 
 // set routes
 app.use(userRouter);
-app.use(require('sanitize').middleware);
+// app.use(require('sanitize').middleware);
 const options = {
     useNewUrlParser: true,
     useUnifiedTopology: true,

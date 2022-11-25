@@ -24,13 +24,13 @@ console.log(request.body);
       const { 
         deck_name,
         description,
-        deck_image_url,
         deck_image,
         created_date
       } = request.body;
 
       console.log("Body");
       console.log(request.body);
+      
   
       let public_id = Guid.create();
 
@@ -38,7 +38,6 @@ console.log(request.body);
         public_id,
         deck_name,
         description,
-        deck_image_url,
         deck_image,
         created_date,
       });

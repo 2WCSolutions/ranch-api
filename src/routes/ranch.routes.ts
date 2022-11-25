@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express'
 import DeckController from '../controllers/deck.controller';
+import ImageController from '../controllers/image.controller';
 import TruckController from '../controllers/truck.controller';
 import UserController from '../controllers/user.controller';
 import WheelController from '../controllers/wheel.controller';
@@ -12,8 +13,9 @@ const router = express.Router();
 // set controllers
 const userController = new UserController();
 const deckController = new DeckController;
-const truckController = new TruckController;
 const wheelController = new WheelController;
+const truckController = new TruckController;
+const imageController = new ImageController;
 
 const handleCors = () => {
     console.log("CORS is running");
@@ -41,6 +43,9 @@ router.post('/api/user', userController.createUser, cors(corsOptions));
 
 router.get('/api/deck', deckController.getAllDecks, cors(corsOptions));
 router.post('/api/deck', deckController.createDeck, cors(corsOptions));
+
+router.get('/api/image', imageController.getAllImages, cors(corsOptions));
+router.post('/api/image', imageController.createImage, cors(corsOptions));
 
 router.get('/api/truck', truckController.getAllTrucks, cors(corsOptions));
 router.post('/api/truck', truckController.createTruck, cors(corsOptions));
