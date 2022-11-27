@@ -5,12 +5,13 @@ import { Buffer } from 'node:buffer';
 import { BlobServiceClient, ContainerClient } from '@azure/storage-blob';
 
 const fs = require('fs');
-// const blobServiceClient = BlobServiceClient.fromConnectionString(
-//     "YOUR-CONNECTION-STRING"
-// );
-//   const containerClient = blobServiceClient.getContainerClient(
-//     "media"
-// );
+
+const blobServiceClient = BlobServiceClient.fromConnectionString(
+    "BlobEndpoint=https://ranchstorage.blob.core.windows.net;SharedAccessSignature=sp=racwdl&st=2022-11-25T19:10:10Z&se=2029-11-26T03:10:10Z&spr=https&sv=2021-06-08&sr=c&sig=COvLdIVRfT98kAFeXFl1u4pCk%2B63z6y1EEXpMWb3ajY%3D"
+);
+  const containerClient = blobServiceClient.getContainerClient(
+    "media"
+);
 
 
 class ImageController implements Controller {
@@ -65,7 +66,7 @@ class ImageController implements Controller {
 
 
 //      await uploadFileToBlob(fileContents);
-        await this.upload();
+        await this.uploadDocumentToAzure(image_data_done);
       
       // can we make this asynchronous
         await image.save();
@@ -78,7 +79,7 @@ class ImageController implements Controller {
 
     
 
-    upload = async () => {
+    download = async () => {
 
         // connect-with-sas-token.js
         const { BlobServiceClient } = require('@azure/storage-blob');
@@ -91,12 +92,9 @@ console.log("test 2");
 
         const blobServiceUri = `https://${accountName}.blob.core.windows.net`;
 
-        const blobServiceClient = new BlobServiceClient(
-            `${blobServiceUri}${sasToken}`,
-            null
-        );
 console.log("test 3");
 console.log(`${blobServiceUri}${sasToken}`);
+console.log("test 4");
 
         const containerName = 'media';
         const blobName = 'Morning.JPG';
@@ -118,8 +116,41 @@ console.log(`${blobServiceUri}${sasToken}`);
 
     }
 
-// 
-}
+
+  uploadDocumentToAzure = async (imageData: String) => {
+    console.log("test 1");
+
+    console.log("test 1");
+            const accountName = "ranchstorage";
+            const sasToken = "sp=racwdl&st=2022-11-25T19:10:10Z&se=2029-11-26T03:10:10Z&spr=https&sv=2021-06-08&sr=c&sig=COvLdIVRfT98kAFeXFl1u4pCk%2B63z6y1EEXpMWb3ajY%3D";
+            if (!accountName) throw Error('Azure Storage accountName not found');
+            if (!sasToken) throw Error('Azure Storage accountKey not found');
+    console.log("test 2");
+    
+            const blobServiceUri = `https://${accountName}.blob.core.windows.net`;
+    
+    
+   const containerClient: ContainerClient = blobServiceClient.getContainerClient("media");
+   console.log("test 3");
+
+    const data = Buffer.from(imageData, "base64");
+    const blockBlobClient = containerClient.getBlockBlobClient("test3.jpg");
+    const response = await blockBlobClient.uploadData(data, {
+      blobHTTPHeaders: {
+        
+      },
+    });
+    if (response._response.status !== 201) {
+      throw new Error(
+        `Error uploading document ${blockBlobClient.name} to container ${blockBlobClient.containerName}`
+      );
+    }
+    console.log("test 4");
+  };
+
+
+
+  }
 
 //   const uploadDocumentToAzure = async () => {
 //     const data = Buffer.from("BASE-64-ENCODED-PDF", "base64");

@@ -26,6 +26,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json({limit: '50mb'}));
 
 // app.use(json());
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+};
 
 // set routes
 app.use(userRouter);
