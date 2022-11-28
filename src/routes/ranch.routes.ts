@@ -4,7 +4,6 @@ import ImageController from '../controllers/image.controller';
 import TruckController from '../controllers/truck.controller';
 import UserController from '../controllers/user.controller';
 import WheelController from '../controllers/wheel.controller';
-import { User } from '../models/user.model';
 
 var cors = require('cors');
 
@@ -38,6 +37,7 @@ const corsOptions = {
 
 
 // set routes
+
 router.get('/api/user', userController.getAllUsers, cors(corsOptions));
 router.post('/api/user', userController.createUser, cors(corsOptions));
 
