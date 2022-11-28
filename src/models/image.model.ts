@@ -7,6 +7,7 @@ interface ImageDoc extends mongoose.Document {
     lastModified: Number;
     lastModifiedDate: String,
     name: String;
+    filename: String;
     size: Number;
     type: String;
     image_data: String;
@@ -20,6 +21,9 @@ const imageSchema = new mongoose.Schema({
         type: String
     },
     name: {
+        type: String
+    },
+    filename: {
         type: String
     },
     size: {

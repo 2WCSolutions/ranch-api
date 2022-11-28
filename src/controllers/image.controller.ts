@@ -4,6 +4,7 @@ import { Image } from '../models/image.model';
 import { Buffer } from 'node:buffer';
 import { BlobServiceClient, ContainerClient } from '@azure/storage-blob';
 import { Constants } from '../libs/constants';
+import { Guid } from 'guid-typescript';
 
 const fs = require('fs');
 
@@ -45,56 +46,62 @@ class ImageController implements Controller {
         image_data
     } = request.body;
   
-      const image = new Image({ 
+    // build new filename
+    let filename = this.buildFilename(name);
+
+    let image = new Image({ 
         lastModified,
         lastModifiedDate,
         name,
+        filename,
         size,
         type,
         image_data
       });
 
       const image_data_done = new String(image_data).replace("data:image/jpeg;base64,", "");
+
+      // set back to image
+      image.image_data = "";
+
+      // for testing
+      this.saveLocal(image_data_done);
+
+      await this.uploadDocumentToAzure(filename, image_data_done);
       
+      await image.save();
+      
+      return response.status(201).send({
+        data: filename
+      })
+      // return response.status(201).send();
+    }
+
+    buildFilename = (name: string) => {      
+      const suffix = name.split('.').length > 0 ? name.split('.')[1] : ",jpg";
+      return `${Guid.create()}.${suffix}`
+    }
+
+    saveLocal = (image_data_done: String) => {
+
       const fileContents = Buffer.from(image_data_done, 'base64')
       fs.writeFile("test.jpg", fileContents, (err: any) => {
         if (err) return console.error(err)
         console.log('file saved to ', "test.jpg")
       });
-
-      const containerName = `media`;
-      const sasToken = "sp=racwdl&st=2022-11-25T19:10:10Z&se=2029-11-26T03:10:10Z&spr=https&sv=2021-06-08&sr=c&sig=COvLdIVRfT98kAFeXFl1u4pCk%2B63z6y1EEXpMWb3ajY%3D";
-      const storageAccountName = "ranchstorage";
-
-
-//      await uploadFileToBlob(fileContents);
-        await this.uploadDocumentToAzure(image_data_done);
-      
-      // can we make this asynchronous
-        await image.save();
-      
-      // return response.status(201).send(image)
-      return response.status(201).send();
     }
 
-    uploadDocumentToAzure = async (imageData: String) => {
-      console.log("test 1");
-  
-      console.log("test 1");
-              const accountName = process.env.AZURE_STORAGE_ACCOUNT;
-              const sasToken = process.env.AZURE_STORAGE_SASTOKEN;
-              if (!accountName) throw Error('Azure Storage accountName not found');
-              if (!sasToken) throw Error('Azure Storage accountKey not found');
-      console.log("test 2");
+    uploadDocumentToAzure = async (filename: string, imageData: String) => {
       
-              const blobServiceUri = process.env.AZURE_STORAGE_BLOB_URL;
-      
-      
-     const containerClient: ContainerClient = blobServiceClient.getContainerClient("media");
-     console.log("test 3");
+      const accountName = process.env.AZURE_STORAGE_ACCOUNT;
+      const sasToken = process.env.AZURE_STORAGE_SASTOKEN;
+      if (!accountName) throw Error('Azure Storage accountName not found');
+      if (!sasToken) throw Error('Azure Storage accountKey not found');
+    
+      const containerClient: ContainerClient = blobServiceClient.getContainerClient("media");
   
       const data = Buffer.from(imageData, "base64");
-      const blockBlobClient = containerClient.getBlockBlobClient("test4.jpg");
+      const blockBlobClient = containerClient.getBlockBlobClient(filename);
       const response = await blockBlobClient.uploadData(data, {
         blobHTTPHeaders: {
           
@@ -105,7 +112,7 @@ class ImageController implements Controller {
           `Error uploading document ${blockBlobClient.name} to container ${blockBlobClient.containerName}`
         );
       }
-      console.log("test 4");
+      console.log(`Uploaded ${filename}`);
     };
   
     

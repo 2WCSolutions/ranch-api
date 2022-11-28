@@ -10,7 +10,7 @@ class DeckController implements Controller {
     public getAllDecks = async (request: Request, response: Response) => {
       
       // careful careful
-      // await deck.deleteMany({});
+      // await Deck.deleteMany({});
   
       let decks = await Deck.find()
         .sort({ "deck_name": 1 });
