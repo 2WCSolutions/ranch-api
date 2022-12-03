@@ -15,14 +15,14 @@ app.use(
       //   '::1', 'http://localhost', 'http://localhost/:1', 'http://127.0.0.1', 
       //   'http://localhost:4/', 'http://localhost:3000', 'http://127.0.0.1:3000/'
       // ],
-      methods: ["GET", "POST"],
+      methods: ["GET", "POST", "PUT", "DELETE"],
       credentials: false
     })
   );
 
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json({limit: '50mb'}));
 
 // app.use(json());

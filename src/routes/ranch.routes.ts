@@ -42,7 +42,11 @@ router.get('/api/user', userController.getAllUsers, cors(corsOptions));
 router.post('/api/user', userController.createUser, cors(corsOptions));
 
 router.get('/api/deck', deckController.getAllDecks, cors(corsOptions));
+router.get('/api/deck/:id', deckController.getDeck, cors(corsOptions));
 router.post('/api/deck', deckController.createDeck, cors(corsOptions));
+router.post('/api/deck/:id', deckController.createDeck, cors(corsOptions));
+router.put('/api/deck/:id', deckController.updateDeck, cors(corsOptions));
+router.delete('/api/deck/:id', deckController.deleteDeck, cors(corsOptions));
 
 router.get('/api/image', imageController.getAllImages, cors(corsOptions));
 router.post('/api/image', imageController.createImage, cors(corsOptions));

@@ -10,11 +10,9 @@ interface DeckDoc extends mongoose.Document {
     deck_name: String;
     description: String;
     deck_image_url: String;
-    deck_image: {
-        size: number,
-        name: String
-    };
     created_date: String;
+    updated_date: String;
+    deleted_date: String;
 }
 
 const deckSchema = new mongoose.Schema({
@@ -30,9 +28,6 @@ const deckSchema = new mongoose.Schema({
         type: String, 
         required: false
     },
-    deck_image: {
-        required: false
-    },
     public_id: {
         type: String, 
         required: false,
@@ -41,6 +36,15 @@ const deckSchema = new mongoose.Schema({
     created_date: {
         type: String, 
         default: new Date().toUTCString(),
+        required: false
+    },
+    updated_date: {
+        type: String, 
+        default: new Date().toUTCString(),
+        required: false
+    },
+    deleted_date: {
+        type: String, 
         required: false
     },
 })
