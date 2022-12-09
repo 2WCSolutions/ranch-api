@@ -41,6 +41,7 @@ const corsOptions = {
 router.get('/api/user', userController.getAllUsers, cors(corsOptions));
 router.post('/api/user', userController.createUser, cors(corsOptions));
 
+// decks
 router.get('/api/deck', deckController.getAllDecks, cors(corsOptions));
 router.get('/api/deck/:id', deckController.getDeck, cors(corsOptions));
 router.post('/api/deck', deckController.createDeck, cors(corsOptions));
@@ -48,13 +49,23 @@ router.post('/api/deck/:id', deckController.createDeck, cors(corsOptions));
 router.put('/api/deck/:id', deckController.updateDeck, cors(corsOptions));
 router.delete('/api/deck/:id', deckController.deleteDeck, cors(corsOptions));
 
+// wheels
+router.get('/api/wheel', wheelController.getAllWheels, cors(corsOptions));
+router.get('/api/wheel/:id', wheelController.getWheel, cors(corsOptions));
+router.post('/api/wheel', wheelController.createWheel, cors(corsOptions));
+router.post('/api/wheel/:id', wheelController.createWheel, cors(corsOptions));
+router.put('/api/wheel/:id', wheelController.updateWheel, cors(corsOptions));
+router.delete('/api/wheel/:id', wheelController.deleteWheel, cors(corsOptions));
+
+// trucks
+router.get('/api/truck', truckController.getAllTrucks, cors(corsOptions));
+router.get('/api/truck/:id', truckController.getTruck, cors(corsOptions));
+router.post('/api/truck', truckController.createTruck, cors(corsOptions));
+router.post('/api/truck/:id', truckController.createTruck, cors(corsOptions));
+router.put('/api/truck/:id', truckController.updateTruck, cors(corsOptions));
+router.delete('/api/truck/:id', truckController.deleteTruck, cors(corsOptions));
+
 router.get('/api/image', imageController.getAllImages, cors(corsOptions));
 router.post('/api/image', imageController.createImage, cors(corsOptions));
-
-router.get('/api/truck', truckController.getAllTrucks, cors(corsOptions));
-router.post('/api/truck', truckController.createTruck, cors(corsOptions));
-
-router.get('/api/wheel', wheelController.getAllWheels, cors(corsOptions));
-router.post('/api/wheel', wheelController.createWheel, cors(corsOptions));
 
 export { router as userRouter }

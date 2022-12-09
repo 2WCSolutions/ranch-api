@@ -17,8 +17,7 @@ class DeckController implements Controller {
         {
           deleted_date: { $eq: null }
         }
-      )
-        .sort(
+      ).sort(
           { "deck_name": 1 }
         );
   
