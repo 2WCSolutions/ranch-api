@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 import { Guid } from 'guid-typescript';
 
 interface DeckModelInterface extends mongoose.Model<DeckDoc> {
@@ -13,6 +13,7 @@ interface DeckDoc extends mongoose.Document {
     created_date: String;
     updated_date: String;
     deleted_date: String;
+    users: Types.ObjectId;
 }
 
 const deckSchema = new mongoose.Schema({
@@ -47,6 +48,10 @@ const deckSchema = new mongoose.Schema({
         type: String, 
         required: false
     },
+    users: {
+        type: [Types.ObjectId],
+        ref: "users"
+    }
 })
 
 const Deck = mongoose.model<DeckDoc, DeckModelInterface>('Deck', deckSchema)

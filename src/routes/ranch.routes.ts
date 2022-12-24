@@ -1,6 +1,8 @@
 import express, { Request, Response } from 'express'
 import DeckController from '../controllers/deck.controller';
+import EmailController from '../controllers/email.controller';
 import ImageController from '../controllers/image.controller';
+import ShopController from '../controllers/shop.controller';
 import TruckController from '../controllers/truck.controller';
 import UserController from '../controllers/user.controller';
 import WheelController from '../controllers/wheel.controller';
@@ -15,6 +17,8 @@ const deckController = new DeckController;
 const wheelController = new WheelController;
 const truckController = new TruckController;
 const imageController = new ImageController;
+const shopController = new ShopController;
+const emailController = new EmailController();
 
 const handleCors = () => {
     console.log("CORS is running");
@@ -38,8 +42,13 @@ const corsOptions = {
 
 // set routes
 
+// users
 router.get('/api/user', userController.getAllUsers, cors(corsOptions));
+router.get('/api/user/:id', userController.getUser, cors(corsOptions));
 router.post('/api/user', userController.createUser, cors(corsOptions));
+router.post('/api/user/:id', userController.createUser, cors(corsOptions));
+router.put('/api/user/:id', userController.updateUser, cors(corsOptions));
+router.delete('/api/user/:id', userController.deleteUser, cors(corsOptions));
 
 // decks
 router.get('/api/deck', deckController.getAllDecks, cors(corsOptions));
@@ -65,7 +74,20 @@ router.post('/api/truck/:id', truckController.createTruck, cors(corsOptions));
 router.put('/api/truck/:id', truckController.updateTruck, cors(corsOptions));
 router.delete('/api/truck/:id', truckController.deleteTruck, cors(corsOptions));
 
+// shops
+router.get('/api/shop', shopController.getAllShops, cors(corsOptions));
+router.get('/api/shop/:id', shopController.getShop, cors(corsOptions));
+router.post('/api/shop', shopController.createShop, cors(corsOptions));
+router.post('/api/shop/:id', shopController.createShop, cors(corsOptions));
+router.put('/api/shop/:id', shopController.updateShop, cors(corsOptions));
+router.delete('/api/shop/:id', shopController.deleteShop, cors(corsOptions));
+
+// images
 router.get('/api/image', imageController.getAllImages, cors(corsOptions));
 router.post('/api/image', imageController.createImage, cors(corsOptions));
+
+// emails
+router.get('/api/email', emailController.getAllEmails, cors(corsOptions));
+router.post('/api/email', emailController.createEmail, cors(corsOptions));
 
 export { router as userRouter }

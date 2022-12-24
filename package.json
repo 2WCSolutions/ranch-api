@@ -24,6 +24,7 @@
     "@types/mongoose": "^5.11.97",
     "@types/node": "^18.11.9",
     "body-parser": "^1.20.1",
+    "dayjs": "^1.11.7",
     "guid-typescript": "^1.0.9",
     "nodemon": "^2.0.20",
     "ts-node": "^10.9.1",
@@ -32,6 +33,7 @@
   "dependencies": {
     "@azure/identity": "^3.1.1",
     "@azure/storage-blob": "^12.12.0",
+    "@sendgrid/mail": "^7.7.0",
     "buffer": "^6.0.3",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",

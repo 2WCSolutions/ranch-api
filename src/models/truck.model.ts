@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 import { Guid } from 'guid-typescript';
 
 interface TruckModelInterface extends mongoose.Model<TruckDoc> {
@@ -13,6 +13,7 @@ interface TruckDoc extends mongoose.Document {
     created_date: String;
     updated_date: String;
     deleted_date: String;
+    users: Types.ObjectId;
 }
 
 const truckSchema = new mongoose.Schema({
@@ -47,6 +48,10 @@ const truckSchema = new mongoose.Schema({
         type: String, 
         required: false
     },
+    users: {
+        type: [Types.ObjectId],
+        ref: "users"
+    }
 })
 
 const Truck = mongoose.model<TruckDoc, TruckModelInterface>('Truck', truckSchema)
