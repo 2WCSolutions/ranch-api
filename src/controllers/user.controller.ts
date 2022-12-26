@@ -192,7 +192,7 @@ public createUser = async (request: Request, response: Response) => {
       await user.save();
       
       // return response.status(201).send(user)
-      return response.status(201).send();
+      return response.status(201).send(user.public_id);
     } catch (error: any) {
       return response.status(201).send(error);
     }

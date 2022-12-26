@@ -88,6 +88,7 @@ class EmailController implements Controller {
       sgMail
         .send(msg)
         .then((response: any) => {
+          console.log(response);
           console.log('Email sent')
         })
         .catch((error: any) => {
