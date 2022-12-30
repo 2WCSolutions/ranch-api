@@ -128,9 +128,15 @@ console.log(request.body);
 
     user.updated_date = new Date().toUTCString();
 
-    await user.save();
-
-    return response.status(201).send();
+    try {
+      // can we make this asynchronous
+      await user.save();
+      
+      // return response.status(201).send(user)
+      return response.status(201).send(user);
+    } catch (error: any) {
+      return response.status(201).send(error);
+    }    
   } else {
     return response.status(404).send();
   }
@@ -192,7 +198,7 @@ public createUser = async (request: Request, response: Response) => {
       await user.save();
       
       // return response.status(201).send(user)
-      return response.status(201).send(user.public_id);
+      return response.status(201).send(user);
     } catch (error: any) {
       return response.status(201).send(error);
     }

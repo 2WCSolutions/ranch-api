@@ -3,6 +3,7 @@ import Controller from '../interfaces/controller.interface';
 import { Guid } from 'guid-typescript';
 import { Email } from '../models/email.model';
 import { env } from 'node:process';
+import { User } from '../models/user.model';
 const sgMail = require('@sendgrid/mail')
 
 class EmailController implements Controller {
@@ -56,7 +57,7 @@ class EmailController implements Controller {
 
     }
 
-    sendEmail = (
+    sendEmail = async (
         from: string,
         to: string,
         user_id: string,
@@ -64,10 +65,21 @@ class EmailController implements Controller {
         first_name: string,
         last_name: string
     ) => {
+
+      let user = await User.findOne({ public_id: { $eq: user_id }});
+
+      if (!user) return;
+
+      user.invitation_sent_date = new Date();
+
+      // save
+      user.save();
+
       sgMail.setApiKey(process.env.SENDGRID_API_KEY)
       const msg = {
         to: to,
-        from: from,
+        subject: env.EMAIL_WELCOME_MESSAGE,
+        from: env.EMAIL_WELCOME_MESSAGE_FROM,
         personalizations:[
           {
              "to":[
@@ -88,11 +100,14 @@ class EmailController implements Controller {
       sgMail
         .send(msg)
         .then((response: any) => {
+
+          console.log(msg);
           console.log(response);
           console.log('Email sent')
+
         })
         .catch((error: any) => {
-          console.error(error)
+          console.error(error.response.body.errors)
         })
     }
 }
