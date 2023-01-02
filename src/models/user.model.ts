@@ -9,6 +9,7 @@ interface UserModelInterface extends mongoose.Model<UserDoc> {
 interface UserDoc extends mongoose.Document {
     user_id: String,
     invitation_code: String,
+    allow_invitation_by_code: Boolean,
     public_id: String,
     display_name: String,
     description: String;
@@ -46,6 +47,10 @@ const userSchema = new mongoose.Schema({
     invitation_code: {
         type: String, 
         required: false,
+    },
+    allow_invitation_by_code: {
+        type: Boolean,
+        default: false
     },
     display_name: {
         type: String, 

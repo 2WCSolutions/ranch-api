@@ -35,9 +35,12 @@ public getUserByInvitationCode  = async (request: Request, response: Response) =
     
   let id = request.params.id;
 
+  console.log("Get User By Invite");
+
   let user = await User.findOne(
     {
-      invitation_code: { $eq: id }
+      invitation_code: { $eq: id },
+      allow_invitation_by_code: { $eq: true }
     }
   )
   .populate("shop")
@@ -113,9 +116,10 @@ public updateUser = async (request: Request, response: Response) => {
     trucks_name,
     wheels_id,
     wheels_name,
-    invitation_sent_date
+    invitation_sent_date,
+    allow_invitation_by_code
     } = request.body;
-console.log(request.body);
+
   let user = await User.findOne({
     public_id: { $eq: id }
   });
@@ -143,6 +147,7 @@ console.log(request.body);
     user.wheels_id = wheels_id;
     user.wheels_name = wheels_name
     user.invitation_sent_date = invitation_sent_date;
+    user.allow_invitation_by_code = allow_invitation_by_code;
 
     user.updated_date = new Date().toUTCString();
 
@@ -181,6 +186,7 @@ public createUser = async (request: Request, response: Response) => {
     trucks_name,
     wheels_id,
     wheels_name,
+    allow_invitation_by_code,
     created_date,
     ip_address_nobody_is_anonymous
     } = request.body;
@@ -203,6 +209,7 @@ public createUser = async (request: Request, response: Response) => {
       trucks_name,
       wheels_id,
       wheels_name,
+      allow_invitation_by_code,
       created_date,
       ip_address_nobody_is_anonymous
     });
