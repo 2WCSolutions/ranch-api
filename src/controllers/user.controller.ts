@@ -3,6 +3,7 @@ import Controller from '../interfaces/controller.interface';
 import { User } from '../models/user.model';
 import { Guid } from 'guid-typescript';
 import { Shop } from '../models/shop.model';
+import ShortUniqueId from 'short-unique-id';
  
 class UserController implements Controller {
 
@@ -29,6 +30,23 @@ class UserController implements Controller {
 
     return response.status(200).send(users);
 }
+
+public getUserByInvitationCode  = async (request: Request, response: Response) => {
+    
+  let id = request.params.id;
+
+  let user = await User.findOne(
+    {
+      invitation_code: { $eq: id }
+    }
+  )
+  .populate("shop")
+  .populate("deck")
+  .populate("truck")
+  .populate("wheel");
+
+  return response.status(200).send(user);
+};
  
 public getUser = async (request: Request, response: Response) => {
   console.log("Get User");
@@ -45,7 +63,7 @@ public getUser = async (request: Request, response: Response) => {
   .populate("truck")
   .populate("wheel");
 
-  return response.status(200).send(user);
+  return  response.status(200).send(user);
 }
 
 public deleteUser = async (request: Request, response: Response) => {
@@ -193,6 +211,10 @@ public createUser = async (request: Request, response: Response) => {
     let shop = await Shop.findOne({public_id: { $eq: shop_id }});
     user.shop = shop?._id;
 
+    // set unique invitation code
+    user.invitation_code = (new ShortUniqueId({ length: 6, dictionary: 'alpha_upper' }))()
+
+    console.log(request.body);
     try {
       // can we make this asynchronous
       await user.save();

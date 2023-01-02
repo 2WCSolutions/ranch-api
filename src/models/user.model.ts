@@ -1,5 +1,6 @@
 import mongoose, { Types } from 'mongoose';
 import { Guid } from 'guid-typescript';
+import ShortUniqueId from 'short-unique-id';
 
 interface UserModelInterface extends mongoose.Model<UserDoc> {
     getAll(): UserDoc[],
@@ -7,6 +8,7 @@ interface UserModelInterface extends mongoose.Model<UserDoc> {
   
 interface UserDoc extends mongoose.Document {
     user_id: String,
+    invitation_code: String,
     public_id: String,
     display_name: String,
     description: String;
@@ -40,6 +42,10 @@ const userSchema = new mongoose.Schema({
     user_id: {
         type: String, 
         required: false
+    },
+    invitation_code: {
+        type: String, 
+        required: false,
     },
     display_name: {
         type: String, 

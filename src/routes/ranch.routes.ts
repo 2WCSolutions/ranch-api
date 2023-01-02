@@ -49,6 +49,7 @@ router.post('/api/user', userController.createUser, cors(corsOptions));
 router.post('/api/user/:id', userController.createUser, cors(corsOptions));
 router.put('/api/user/:id', userController.updateUser, cors(corsOptions));
 router.delete('/api/user/:id', userController.deleteUser, cors(corsOptions));
+router.get('/api/invitation/:id', userController.getUserByInvitationCode, cors(corsOptions));
 
 // decks
 router.get('/api/deck', deckController.getAllDecks, cors(corsOptions));
